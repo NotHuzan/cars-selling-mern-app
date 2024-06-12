@@ -1,6 +1,8 @@
 import React from "react";
 import "../car/Car.css";
 import { Link } from "react-router-dom";
+import { FaRegEdit } from "react-icons/fa";
+import { MdOutlineDeleteForever } from "react-icons/md";
 
 // Create a mapping of model names to image paths
 const carImages = {
@@ -17,6 +19,75 @@ export default function Car(props) {
   // const imageSrc = carImages[props.model];
   const imageSrc = String(props.imageSrc);
   console.log(imageSrc.match("^upload"));
+
+  const editAdHandler = () => {};
+
+  const deleteAdHandler = () => {
+    const result = confirm("Are you sure to remove Ad?");
+
+    if (result) {
+      console.log("ad removed");
+    } else {
+      console.log("ad not removed");
+    }
+  };
+
+  return (
+    <div
+      id="carbox"
+      className="bg-gray-100 pb-8 flex flex-col rounded-2xl shadow-lg h-96"
+    >
+      {props.edit && (
+        <div className="edit-box">
+          <div className="edit edit-btn" onClick={editAdHandler}>
+            <FaRegEdit />
+          </div>
+          <div className="delete edit-btn" onClick={deleteAdHandler}>
+            <MdOutlineDeleteForever />
+          </div>
+        </div>
+      )}
+      <div className="cari bg-center bg-cover w-[93%] mx-auto mt-2 rounded-lg h-1/2">
+        <img
+          src={
+            imageSrc.match("^uploads")
+              ? "http://localhost:5000/" + props.imageSrc
+              : carImages[props.model]
+          }
+          alt={`${props.make} ${props.model}`}
+          className="block w-full h-full object-cover object-center"
+        />
+      </div>
+      <div className="card bg-gray-100 border-none w-[95%] mx-auto h-1/2">
+        <h4 className="font-poppins mt-4 text-center font-bold capitalize">
+          {props.make} {props.model}
+        </h4>
+        <h6 className="font-poppins text-red-600 font-semibold text-center">
+          PKR {props.price}
+        </h6>
+        <div className="row mx-auto mt-4 flex w-full justify-evenly">
+          <div className="column flex flex-col items-center">
+            <h6 className="font-bold">Model</h6>
+            <h6 className="font-poppins">{props.year}</h6>
+          </div>
+          <div className="column flex flex-col items-center">
+            <h6 className="font-bold">Mileage</h6>
+            <h6 className="font-poppins">{props.mileage}</h6>
+          </div>
+          <div className="column flex flex-col items-center">
+            <h6 className="font-bold">Fuel</h6>
+            <h6 className="font-poppins">{props.fuel}</h6>
+          </div>
+        </div>
+        <Link
+          to={`/car/${props.id}`}
+          className="list-none no-underline bg-black text-white px-2 py-1 text-center inline-block mx-auto mt-4 rounded-2xl text-sm"
+        >
+          See Details
+        </Link>
+      </div>
+    </div>
+  );
 
   return (
     <div id="carbox">

@@ -12,6 +12,9 @@ import Signup from "./pages/Signup/Signup";
 import Postad from "./pages/Postad/Postad";
 import { useSelector } from "react-redux";
 import UserAds from "./pages/UserAds/UserAds";
+import PasswordReset from "./pages/PasswordReset/PasswordReset";
+import UserProfile from "./pages/UserProfile/UserProfile";
+import UserSavedAds from "./pages/UserSavedAds/UserSavedAds";
 
 function App() {
   const all = ["Honda Vezel", "Toyota CHR", "Mercedes C180", "BMW 350i"];
@@ -47,6 +50,9 @@ function App() {
         <Route path="/login" element={<LoginForm />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/myads" element={<UserAds />}></Route>
+        <Route path="/saved_ads" element={<UserSavedAds />}></Route>
+        <Route path="/profile" element={<UserProfile />}></Route>
+        <Route path="/profile/reset_password" element={<PasswordReset type='password' />}></Route>
       </Routes>
       <Footer />
     </>

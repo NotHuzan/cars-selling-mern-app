@@ -79,6 +79,23 @@
     flex: 1;
 }
 
+.save-btn{
+    height: 30px;
+    width: 30px;
+    background-color: #fff;
+    position: absolute;
+    top: 3%;
+    right: 5%;
+    z-index: 1000;
+    text-align: center;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
 
 
 @media screen and (max-width: 1024px) {

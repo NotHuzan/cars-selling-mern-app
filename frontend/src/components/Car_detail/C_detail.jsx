@@ -1,11 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./C_detail.css";
+import { FaRegBookmark, FaBookmark } from "react-icons/fa6";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 export default function C_detail() {
   const { id } = useParams();
   const [car, setCar] = useState({});
   const [images, setImages] = useState([]);
+  const [isSaved, setIsSaved] = useState(false);
+  const user = useSelector((state) => state.activeUser);
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  const [snackbar, setSnackbar] = useState(false);
+  const [snackText, setSnackText] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCar = async () => {
@@ -15,12 +26,99 @@ export default function C_detail() {
         setCar(result);
         console.log(car);
         setImages(result.images || []);
+
+        if (isLoggedIn) {
+          try {
+            const { data } = await axios.post(
+              "http://localhost:5000/api/user/is_ad_saved",
+              {
+                userId: user._id,
+                carId: result._id,
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${user.token}`,
+                },
+              }
+            );
+            console.log(data);
+            setIsSaved(data.isSaved);
+          } catch (err) {
+            console.log(err);
+            setIsSaved(err.response.data.isSaved);
+          }
+        }
       } catch (err) {
         console.log("Error : ", err);
       }
     };
     fetchCar();
   }, [id]);
+
+  const saveAdHandler = async () => {
+    if (!isLoggedIn) navigate("/login");
+    else if (isSaved) {
+      // remove from saved ads
+      try {
+        const { data } = await axios.delete(
+          "http://localhost:5000/api/user/savead",
+          {
+            data: {
+              userId: user._id,
+              carId: car._id,
+            },
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
+        );
+
+        setIsSaved(false);
+        setSnackText({
+          text: data.message,
+          severity: "success",
+        });
+        setSnackbar(true);
+      } catch (err) {
+        console.log(err);
+        setSnackText({
+          text: err.response.data.message,
+          severity: "error",
+        });
+        setSnackbar(true);
+      }
+    } else {
+      // add to saved ads
+      try {
+        const { data } = await axios.post(
+          "http://localhost:5000/api/user/savead",
+          {
+            userId: user._id,
+            carId: car._id,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
+        );
+
+        setIsSaved(true);
+        setSnackText({
+          text: data.message,
+          severity: "success",
+        });
+        setSnackbar(true);
+      } catch (err) {
+        console.log(err);
+        setSnackText({
+          text: err.response.data.message,
+          severity: "error",
+        });
+        setSnackbar(true);
+      }
+    }
+  };
 
   return (
     <>
@@ -30,6 +128,9 @@ export default function C_detail() {
           className="carousel slide child1"
           data-ride="carousel"
         >
+          <div className="save-btn" title="Save Ad" onClick={saveAdHandler}>
+            {isSaved ? <FaBookmark /> : <FaRegBookmark />}
+          </div>
           <div className="carousel-inner">
             {images.map((image, index) => (
               <div
@@ -39,7 +140,11 @@ export default function C_detail() {
                 {/* the condition in src is to check if the imageSrc starts with upload which means that they are stored in uploads of backend folder ,else they are hardcoded from above */}
                 <img
                   className="d-block w-100"
-                  src={String(image).match('^uploads') ? 'http://localhost:5000/' + image :  image}
+                  src={
+                    String(image).match("^uploads")
+                      ? "http://localhost:5000/" + image
+                      : image
+                  }
                   // src={'http://localhost:5000/' + image}
                   alt={`Slide ${index + 1}`}
                 />
@@ -116,6 +221,19 @@ export default function C_detail() {
           <h6>{car.description}</h6>
         </div>
       </div>
+      <Snackbar
+        open={snackbar}
+        autoHideDuration={3000}
+        onClose={() => setSnackbar(false)}
+      >
+        <Alert
+          severity={snackText.severity}
+          variant="filled"
+          sx={{ width: "300px" }}
+        >
+          {snackText.text}
+        </Alert>
+      </Snackbar>
     </>
   );
 }

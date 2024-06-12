@@ -1,4 +1,5 @@
 const Car = require("../models/Car");
+const SavedAd = require("../models/SavedAd");
 
 const getCars = async (req, res) => {
   console.log(req.query.search);
@@ -67,6 +68,7 @@ const getCarID = async (req, res) => {
     path: "owner",
     select: ["name", "phone", "location"],
   });
+
   car
     ? res.status(200).send(car)
     : res.status(500).send("Error Fetching Details");
@@ -77,7 +79,6 @@ module.exports = {
   getCarID,
   getCarsByType,
 };
-
 
 const populateCars = async () => {
   await Car.insertMany([

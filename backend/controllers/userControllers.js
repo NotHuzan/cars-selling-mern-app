@@ -1,5 +1,6 @@
 const Member = require("../models/Member");
 const Car = require("../models/Car");
+const SavedAd = require("../models/SavedAd");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -96,11 +97,141 @@ const myAds = async (req, res) => {
     : res.status(500).json({ message: "Error Fetchong Ads!" });
 };
 
+const resetPassword = async (req, res) => {
+  const { user, oldPass, newPass } = req.body;
+  const member = await Member.findById(user._id);
+  if (!member) {
+    return res
+      .status(500)
+      .json({ message: "User Not Found. Please Login Again!" });
+  }
+  const isPasswordCorrect = bcrypt.compareSync(oldPass, member.password);
+  if (!isPasswordCorrect) {
+    return res.status(400).json({ message: "Invaild Current Password!" });
+  }
+
+  const newHashPass = bcrypt.hashSync(newPass);
+  member.password = newHashPass;
+  await member.save();
+  return res.status(200).json({ message: "Password Changed Succesfully!" });
+};
+
+const updateProfile = async (req, res) => {
+  const { _id, email, name, phone, location } = req.body;
+
+  const user = await Member.findById(_id);
+  if (!user) {
+    return res
+      .status(500)
+      .json({ message: "User Not Found. Please Login Again!" });
+  }
+
+  user.email = email;
+  user.name = name;
+  user.phone = phone;
+  user.location = location;
+
+  await user.save();
+  return res.status(200).json({ user, message: "Changes Saved Succesfully!" });
+};
+
+const getSavedAds = async (req, res) => {
+  const { userId } = req.params;
+
+  const ad = await SavedAd.findOne({ owner: userId }).populate({
+    path: "ads",
+  });
+
+  if (!ad) {
+    return res.status(404).json({ message: "No Saved Ads!" });
+  }
+
+  return res.status(200).send(ad);
+};
+
+const isAdSaved = async (req, res) => {
+  const { userId, carId } = req.body;
+
+  // console.log(userId,carId);
+
+  const ad = await SavedAd.findOne({ owner: userId });
+
+  if (!ad) {
+    return res.status(404).json({ message: "No Saved Ads!" });
+  }
+
+  // not found in saved ads
+  const index = ad.ads.findIndex((ad) => ad == carId);
+  console.log(index);
+  if (index === -1) {
+    return res.status(400).json({ isSaved: false });
+  }
+
+  // found in saved ads
+  return res.status(200).json({ isSaved: true });
+};
+
+const saveAd = async (req, res) => {
+  const { userId, carId } = req.body;
+
+  const ad = await SavedAd.findOne({ owner: userId });
+
+  if (!ad) {
+    const newAd = new SavedAd({
+      owner: userId,
+      ads: [carId],
+    });
+    await newAd.save();
+    return res.status(200).json({ message: "Ad Saved Successfully!" });
+  }
+
+  ad.ads.push(carId);
+  await ad.save();
+  return res.status(200).json({ message: "Ad Saved Successfully!" });
+};
+
+const removeSavedAd = async (req, res) => {
+  const { userId, carId } = req.body;
+
+  const ad = await SavedAd.findOne({ owner: userId });
+
+  if (!ad) {
+    return res.status(200).json({ message: "Ad is already not saved!" });
+  }
+
+  const index = ad.ads.findIndex((ad) => ad == carId);
+  ad.ads.splice(index, 1);
+  await ad.save();
+  return res.status(200).json({ message: "Ad Unsaved Successfully!" });
+};
+
+const deleteMyAd = async (req, res) => {
+  const { userId, carId } = req.body;
+
+  const ad = await SavedAd.findOne({ owner: userId });
+
+  if (!ad) {
+    return res.status(200).json({ message: "Ad is already not saved!" });
+  }
+
+  const index = ad.ads.findIndex((ad) => ad == carId);
+  ad.ads.splice(index, 1);
+  await ad.save();
+  return res.status(200).json({ message: "Ad Unsaved Successfully!" });
+};
+
 module.exports = {
   login,
   signup,
   postAd,
   myAds,
+  resetPassword,
+  updateProfile,
+  getSavedAds,
+  isAdSaved,
+  saveAd,
+  removeSavedAd,
+  deleteMyAd
 };
 
 const populateMembers = async () => {

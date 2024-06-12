@@ -1,11 +1,11 @@
-@font-face {
+/* @font-face {
     font-family: 'FSP DEMO - Caros Heavy';
     src: url('C:\Users\Ahmad\AppData\Local\Microsoft\Windows\Fonts\Fontspring-DEMO-caros-extrabold.otf') 
 }
 @font-face {
     font-family: 'FSP DEMO - Caros Light';
     src: url('C:\Users\Ahmad\AppData\Local\Microsoft\Windows\Fonts\Fontspring-DEMO-carossoft-bold.otf') 
-}
+} */
 #body{
    background-color: #fefefe;
     margin-top: 3rem;
