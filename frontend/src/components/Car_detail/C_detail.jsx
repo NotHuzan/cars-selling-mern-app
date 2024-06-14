@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./C_detail.css";
 import { FaRegBookmark, FaBookmark } from "react-icons/fa6";
 import { useSelector } from "react-redux";
@@ -17,46 +17,48 @@ export default function C_detail() {
   const [snackbar, setSnackbar] = useState(false);
   const [snackText, setSnackText] = useState({});
   const navigate = useNavigate();
+  const location = useLocation();
 
-  useEffect(() => {
-    const fetchCar = async () => {
-      try {
-        const response = await fetch(`http://localhost:5000/api/car/car/${id}`);
-        const result = await response.json();
-        setCar(result);
-        console.log(car);
-        setImages(result.images || []);
+  const fetchCar = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/car/car/${id}`);
+      const result = await response.json();
+      setCar(result);
+      console.log(car);
+      setImages(result.images || []);
 
-        if (isLoggedIn) {
-          try {
-            const { data } = await axios.post(
-              "http://localhost:5000/api/user/is_ad_saved",
-              {
-                userId: user._id,
-                carId: result._id,
+      if (isLoggedIn) {
+        try {
+          const { data } = await axios.post(
+            "http://localhost:5000/api/user/is_ad_saved",
+            {
+              userId: user._id,
+              carId: result._id,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${user.token}`,
               },
-              {
-                headers: {
-                  Authorization: `Bearer ${user.token}`,
-                },
-              }
-            );
-            console.log(data);
-            setIsSaved(data.isSaved);
-          } catch (err) {
-            console.log(err);
-            setIsSaved(err.response.data.isSaved);
-          }
+            }
+          );
+          console.log(data);
+          setIsSaved(data.isSaved);
+        } catch (err) {
+          console.log(err);
+          setIsSaved(err.response.data.isSaved);
         }
-      } catch (err) {
-        console.log("Error : ", err);
       }
-    };
+    } catch (err) {
+      console.log("Error : ", err);
+    }
+  };
+  
+  useEffect(() => {
     fetchCar();
   }, [id]);
 
   const saveAdHandler = async () => {
-    if (!isLoggedIn) navigate("/login");
+    if (!isLoggedIn) navigate("/login", { state: { from: location } });
     else if (isSaved) {
       // remove from saved ads
       try {

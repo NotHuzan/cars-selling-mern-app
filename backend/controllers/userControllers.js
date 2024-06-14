@@ -94,7 +94,7 @@ const myAds = async (req, res) => {
   const car = await Car.find({ owner: req.params.id });
   car
     ? res.status(200).send(car)
-    : res.status(500).json({ message: "Error Fetchong Ads!" });
+    : res.status(500).json({ message: "Error Fetching Ads!" });
 };
 
 const resetPassword = async (req, res) => {
@@ -206,18 +206,51 @@ const removeSavedAd = async (req, res) => {
 };
 
 const deleteMyAd = async (req, res) => {
-  const { userId, carId } = req.body;
+  const { carId } = req.params;
 
-  const ad = await SavedAd.findOne({ owner: userId });
+  const del = await Car.findByIdAndDelete(carId);
 
-  if (!ad) {
-    return res.status(200).json({ message: "Ad is already not saved!" });
+  if (!del) {
+    return res.status(200).json({ message: "Ad already don't exist!" });
   }
 
-  const index = ad.ads.findIndex((ad) => ad == carId);
-  ad.ads.splice(index, 1);
-  await ad.save();
-  return res.status(200).json({ message: "Ad Unsaved Successfully!" });
+  return res.status(200).json({ message: "Ad Deleted Successfully!" });
+};
+
+const editMyAd = async (req, res) => {
+  // const { formData } = req.body;
+  const { carId } = req.params;
+
+  // if (!user) {
+  //   return res
+  //     .status(500)
+  //     .json({ message: "User Not Found. Please Login Again!" });
+  // }
+
+  // user.email = email;
+  // user.name = name;
+  // user.phone = phone;
+  // user.location = location;
+
+  // await user.save();
+  // return res.status(200).json({ user, message: "Changes Saved Succesfully!" });
+
+  try {
+    const imagePaths = req.files.map((file) => file.path);
+    const newCarData = {
+      ...req.body,
+      make: req.body.make.toLowerCase(),
+      model: req.body.model.toLowerCase(),
+      images: imagePaths,
+    };
+
+    const car = await Car.findByIdAndUpdate(carId, newCarData);
+
+    return res.status(200).json({ message: "Ad Updated Successfully!" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Error Updating Ad!" });
+  }
 };
 
 module.exports = {
@@ -231,7 +264,8 @@ module.exports = {
   isAdSaved,
   saveAd,
   removeSavedAd,
-  deleteMyAd
+  deleteMyAd,
+  editMyAd,
 };
 
 const populateMembers = async () => {

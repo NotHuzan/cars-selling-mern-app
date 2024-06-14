@@ -13,7 +13,8 @@ const {
   saveAd,
   isAdSaved,
   removeSavedAd,
-  deleteMyAd
+  deleteMyAd,
+  editMyAd,
 } = require("../controllers/userControllers");
 
 router.post("/login", login);
@@ -26,6 +27,8 @@ router.get("/saved_ads/:userId", verifyToken, getSavedAds);
 router.post("/savead", verifyToken, saveAd);
 router.post("/is_ad_saved", verifyToken, isAdSaved);
 router.delete("/savead", verifyToken, removeSavedAd);
-router.delete("/myads", verifyToken, deleteMyAd);
+router.delete("/savead", verifyToken, removeSavedAd);
+router.delete("/myads/:carId", verifyToken, deleteMyAd);
+router.put("/editad/:carId", verifyToken, upload.array("images[]"), editMyAd);
 
 module.exports = router;

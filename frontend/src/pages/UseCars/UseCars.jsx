@@ -112,6 +112,7 @@ const UseCars = ({ type, ownerAds, savedAds }) => {
             fuel={car.fuelType}
             imageSrc={car.images[0]}
             edit={editAd}
+            reFetch={fetchUserAds}
           />
         ))
       ) : (

@@ -46,13 +46,14 @@ function App() {
         <Route path="/usedcars/sedan" element={<UseCars type="sedan" />} />
         <Route path="/usedcars/crossover" element={<UseCars type="crossover" />}/>
         <Route path="/car/:id" element={<Car_deatils />}></Route>
-        <Route path="/postad" element={<Postad />}></Route>
+        <Route path="/postad" element={<Postad type='post'/>}></Route>
         <Route path="/login" element={<LoginForm />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/myads" element={<UserAds />}></Route>
         <Route path="/saved_ads" element={<UserSavedAds />}></Route>
         <Route path="/profile" element={<UserProfile />}></Route>
         <Route path="/profile/reset_password" element={<PasswordReset type='password' />}></Route>
+        <Route path="/editad/:carId" element={<Postad type='edit'/>}></Route>
       </Routes>
       <Footer />
     </>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
 import Box from "@mui/material/Box";
@@ -35,13 +35,15 @@ const Navbar = ({ stock, SUV, SEDAN, CROSS }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const loggedIn = useSelector((state) => state.isLoggedIn);
 
   const open = Boolean(anchorEl);
 
   const handleClick = (event) => {
-    loggedIn ? setAnchorEl(event.currentTarget) : navigate("/login");
+    loggedIn ? setAnchorEl(event.currentTarget) : navigate("/login", { state: { from: location } });
   };
+  
   const handleClose = () => {
     setAnchorEl(null);
   };

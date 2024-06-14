@@ -5,38 +5,84 @@ import image1 from "./1.png";
 import image2 from "./2.png";
 import image3 from "./3.png";
 import { useSelector } from "react-redux";
-import { useLocation, useNavigate, redirect } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+  redirect,
+  useParams,
+  Form,
+} from "react-router-dom";
 import axios from "axios";
 
-const Advertisement = () => {
-  const [form, setForm] = useState({
-    owner: "",
-    make: "",
-    model: "",
-    type: "",
-    engine: "",
-    year: "",
-    mileage: "",
-    price: "",
-    condition: "",
-    fueltype: "",
-    transmission: "",
-    color: "",
-    location: "",
-    description: "",
-    images: [],
-  });
+const PostAd = ({ type }) => {
+  const [editCarId, setEditCarId] = useState(false);
+  const [form, setForm] = useState({});
 
   const user = useSelector((state) => state.activeUser);
   const navigate = useNavigate();
   const location = useLocation();
+  const { carId } = useParams();
+
+  const fetchCar = async () => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:5000/api/car/car/${carId}`
+      );
+      console.log(data);
+      setForm({
+        owner: data.owner._id,
+        make: data.make,
+        model: data.model,
+        type: data.type,
+        engine: data.engine,
+        year: data.year,
+        mileage: data.mileage,
+        price: data.price,
+        condition: data.condition,
+        fuelType: data.fuelType,
+        transmission: data.transmission,
+        color: data.color,
+        location: data.location,
+        description: data.description,
+        images: data.images,
+      });
+      setEditCarId(data._id);
+      // setImages(result.images || []);
+    } catch (err) {
+      console.log("Error : ", err);
+    }
+  };
 
   useEffect(() => {
     if (!user) {
       // navigate("/login");
       navigate("/login", { state: { from: location } });
     }
-  }, []);
+
+    // type === "edit" ? setEdit(true) : setEdit(false);
+    if (type === "edit") {
+      fetchCar();
+    } else {
+      setEditCarId(null);
+      setForm({
+        owner: "",
+        make: "",
+        model: "",
+        type: "",
+        engine: "",
+        year: "",
+        mileage: "",
+        price: "",
+        condition: "",
+        fuelType: "",
+        transmission: "",
+        color: "",
+        location: "",
+        description: "",
+        images: [],
+      });
+    }
+  }, [type]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,6 +93,7 @@ const Advertisement = () => {
   };
 
   const handleFileChange = (e) => {
+    console.log(e.target.files);
     const files = Array.from(e.target.files);
     setForm((prevForm) => ({
       ...prevForm,
@@ -73,37 +120,37 @@ const Advertisement = () => {
     console.log("Form submitted:", form);
 
     try {
-      const { data } = await axios.post(
-        "http://localhost:5000/api/user/postad",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      );
+      let data;
+      if (editCarId) {
+        console.log(formData);
+        const { res } = await axios.put(
+          `http://localhost:5000/api/user/editad/${editCarId}`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
+        );
+        data = res;
+        console.log(data);
+      } else {
+        console.log(formData);
+        const { res } = await axios.post(
+          "http://localhost:5000/api/user/postad",
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
+        );
+        data = res;
+        console.log(data);
+      }
     } catch (error) {
       console.log(error.response.data.message);
     }
-    // fetch("http://localhost:5000/api/user/postad", {
-    //   method: "POST",
-    //   body: formData,
-    //   headers: {
-    //     Authorization: `Bearer ${user.tokenn}`,
-    //   },
-    // })
-    //   .then((res) => {
-    //     if (!res.ok) {
-    //       throw new Error(`Network response was not ok: ${res.statusText}`);
-    //     }
-    //     return res.json();
-    //   })
-    //   .then((data) => {
-    //     console.log("Ad posted", data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error posting ad:", error);
-    //   });
   };
 
   return (
@@ -212,8 +259,8 @@ const Advertisement = () => {
             FuelType *
             <input
               type="text"
-              name="fueltype"
-              value={form.fueltype}
+              name="fuelType"
+              value={form.fuelType}
               onChange={handleChange}
               required
             />
@@ -265,6 +312,7 @@ const Advertisement = () => {
               accept="image/jpeg, image/jpg, image/png, image/gif"
               multiple
               onChange={handleFileChange}
+              // value={form.images}
             />
             <p>
               <img src={image3} alt="Upload guideline"></img>
@@ -289,7 +337,7 @@ const Advertisement = () => {
   );
 };
 
-export default Advertisement;
+export default PostAd;
 
 // // App.js
 
