@@ -4,7 +4,7 @@ import { FaUser, FaLock, FaPhoneAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { authActions } from "../../store/store";
+import { authActions } from "../../store/auth";
 import axios from "axios";
 
 const LoginForm = () => {
@@ -12,7 +12,7 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const user = useSelector((state) => state.activeUser);
+  const user = useSelector((state) => state.auth.activeUser);
   const [form, setForm] = useState({
     email: "",
     password: "",

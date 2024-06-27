@@ -5,12 +5,11 @@ import { MdEmail } from "react-icons/md";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { authActions } from "../../store/store";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
+import { authActions } from "../../store/auth";
+import { snackbarActions } from "../../store/snackbar";
 
 const UserProfile = () => {
-  const user = useSelector((state) => state.activeUser);
+  const user = useSelector((state) => state.auth.activeUser);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -20,8 +19,6 @@ const UserProfile = () => {
     phone: "",
     location: "",
   });
-  const [snackbar, setSnackbar] = useState(false);
-  const [snackText, setSnackText] = useState({});
 
   useEffect(() => {
     setForm({
@@ -55,11 +52,12 @@ const UserProfile = () => {
       // console.log(data);
       const updatedUser = { ...data.user, token: user.token };
 
-      setSnackText({
-        text: data.message,
-        severity: "success",
-      });
-      setSnackbar(true);
+      dispatch(
+        snackbarActions.openSnackbar({
+          text: data.message,
+          severity: "success",
+        })
+      );
 
       dispatch(authActions.login(updatedUser));
       setTimeout(() => {
@@ -67,11 +65,12 @@ const UserProfile = () => {
         navigate(from);
       }, 2500);
     } catch (err) {
-      setSnackText({
-        text: err.response.data.message,
-        severity: "error",
-      });
-      setSnackbar(true);
+      dispatch(
+        snackbarActions.openSnackbar({
+          text: err.response.data.message,
+          severity: "error",
+        })
+      );
     }
   };
 
@@ -150,19 +149,6 @@ const UserProfile = () => {
           </div>
         </div>
       </div>
-      <Snackbar
-        open={snackbar}
-        autoHideDuration={3000}
-        onClose={() => setSnackbar(false)}
-      >
-        <Alert
-          severity={snackText.severity}
-          variant="filled"
-          sx={{ width: "300px" }}
-        >
-          {snackText.text}
-        </Alert>
-      </Snackbar>
     </>
   );
 };

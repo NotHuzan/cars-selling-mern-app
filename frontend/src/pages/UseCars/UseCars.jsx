@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Car from "../../components/car/Car";
 import { useLocation } from "react-router-dom";
-import { UseSelector, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const UseCars = ({ type, ownerAds, savedAds }) => {
   const [cars, setCars] = useState([]);
   const [error, setError] = useState(null);
   const [editAd, setEditAd] = useState(false);
   const { search } = useLocation();
-  const user = useSelector((state) => state.activeUser);
+  const user = useSelector((state) => state.auth.activeUser);
   search ? console.log(search) : console.log("no search");
 
   const fetchCars = async () => {

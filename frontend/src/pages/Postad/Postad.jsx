@@ -18,7 +18,7 @@ const PostAd = ({ type }) => {
   const [editCarId, setEditCarId] = useState(false);
   const [form, setForm] = useState({});
 
-  const user = useSelector((state) => state.activeUser);
+  const user = useSelector((state) => state.auth.activeUser);
   const navigate = useNavigate();
   const location = useLocation();
   const { carId } = useParams();

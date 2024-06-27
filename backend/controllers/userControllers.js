@@ -1,6 +1,7 @@
 const Member = require("../models/Member");
 const Car = require("../models/Car");
 const SavedAd = require("../models/SavedAd");
+const Appointment = require("../models/Appointment");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -218,22 +219,7 @@ const deleteMyAd = async (req, res) => {
 };
 
 const editMyAd = async (req, res) => {
-  // const { formData } = req.body;
   const { carId } = req.params;
-
-  // if (!user) {
-  //   return res
-  //     .status(500)
-  //     .json({ message: "User Not Found. Please Login Again!" });
-  // }
-
-  // user.email = email;
-  // user.name = name;
-  // user.phone = phone;
-  // user.location = location;
-
-  // await user.save();
-  // return res.status(200).json({ user, message: "Changes Saved Succesfully!" });
 
   try {
     const imagePaths = req.files.map((file) => file.path);
@@ -253,6 +239,80 @@ const editMyAd = async (req, res) => {
   }
 };
 
+const bookAppointment = async (req, res) => {
+  const { userId, carId, appointmentDate, location } = req.body;
+  const appointment = await Appointment.findOne({ carId, userId });
+
+  if (appointment) {
+    return res
+      .status(400)
+      .json({ message: "You have already booked the appointment of this Ad!" });
+  }
+
+  const newApp = new Appointment({
+    userId,
+    carId,
+    appointmentDate,
+    location,
+  });
+
+  await newApp.save();
+
+  return res.status(200).json({ message: "Appointment Booked Succesfully!" });
+};
+
+const getBookedAppointment = async (req, res) => {
+  const { userId } = req.params;
+  const appointment = await Appointment.find({userId}).populate({
+    path: "carId",
+    select: 'make model images' 
+  });
+  if (!appointment) {
+    return res.status(404).json({ message: "No Appointments!" });
+  }
+
+  return res.status(200).send(appointment);
+};
+
+const cancelAppointment = async (req, res) => {
+  const { appointmentId } = req.params;
+  const appointment = await Appointment.findByIdAndDelete(appointmentId);
+  if (!appointment) {
+    return res
+      .status(404)
+      .json({ message: "Appointment already don't exist!" });
+  }
+
+  return res
+    .status(200)
+    .json({ message: "Appointment Cancelled Successfully!" });
+};
+
+const completeAppointment = async (req, res) => {
+  const { appointmentId } = req.params;
+  const appointment = await Appointment.findByIdAndDelete(appointmentId);
+  if (!appointment) {
+    return res.status(404).json({ message: "Appointment don't exist!" });
+  }
+
+  return res.status(200).json({ message: "Appointment Marked as Completed!" });
+};
+
+const editAppointment = async (req, res) => {
+  const { appointmentId } = req.params;
+  const { appointmentDate, location } = req.body;
+
+  const appointment = await Appointment.findByIdAndUpdate(appointmentId, {
+    $set: { appointmentDate, location },
+  });
+
+  if (!appointment) {
+    return res.status(404).json({ message: "Appointment Not Found!" });
+  }
+
+  return res.status(200).json({ message: "Appointment Updated Successfully!" });
+};
+
 module.exports = {
   login,
   signup,
@@ -266,6 +326,11 @@ module.exports = {
   removeSavedAd,
   deleteMyAd,
   editMyAd,
+  bookAppointment,
+  getBookedAppointment,
+  cancelAppointment,
+  completeAppointment,
+  editAppointment,
 };
 
 const populateMembers = async () => {

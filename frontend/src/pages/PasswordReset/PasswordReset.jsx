@@ -4,20 +4,17 @@ import { FaUser, FaLock, FaPhoneAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { authActions } from "../../store/store";
+import { authActions } from "../../store/auth";
 import axios from "axios";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
+import { snackbarActions } from "../../store/snackbar";
 
 const PasswordReset = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.activeUser);
+  const user = useSelector((state) => state.auth.activeUser);
   const [oldPass, setOldPassword] = useState("");
   const [newPass, setNewPassword] = useState("");
   const [confirmPass, setConfirmPass] = useState();
-  const [snackbar, setSnackbar] = useState(false);
-  const [snackText, setSnackText] = useState({});
 
   console.log(user);
 
@@ -25,11 +22,12 @@ const PasswordReset = () => {
     e.preventDefault();
 
     if (newPass !== confirmPass) {
-      setSnackText({
-        text: "New Password and Confirm Password are different !",
-        severity: "error",
-      });
-      setSnackbar(true);
+      dispatch(
+        snackbarActions.openSnackbar({
+          text: "New Password and Confirm Password are different !",
+          severity: "error",
+        })
+      );
     } else {
       try {
         const { data } = await axios.post(
@@ -46,11 +44,12 @@ const PasswordReset = () => {
         // dispatch(authActions.login(user));
         // const from = location.state?.from?.pathname || "/";
         // navigate(from);
-        setSnackText({
-          text: data.message,
-          severity: "success",
-        });
-        setSnackbar(true);
+        dispatch(
+          snackbarActions.openSnackbar({
+            text: data.message,
+            severity: "success",
+          })
+        );
         dispatch(authActions.logout());
         setTimeout(() => {
           navigate("/login");
@@ -58,17 +57,19 @@ const PasswordReset = () => {
       } catch (err) {
         console.log(err.response.data.message);
         if (err.response.status === 400) {
-          setSnackText({
-            text: err.response.data.message,
-            severity: "error",
-          });
-          setSnackbar(true);
+          dispatch(
+            snackbarActions.openSnackbar({
+              text: err.response.data.message,
+              severity: "error",
+            })
+          );
         } else {
-          setSnackText({
-            text: err.response.data.message,
-            severity: "error",
-          });
-          setSnackbar(true);
+          dispatch(
+            snackbarActions.openSnackbar({
+              text: err.response.data.message,
+              severity: "error",
+            })
+          );
           dispatch(authActions.logout());
           setTimeout(() => {
             navigate("/login");
@@ -128,20 +129,6 @@ const PasswordReset = () => {
           </div>
         </div>
       </div>
-
-      <Snackbar
-        open={snackbar}
-        autoHideDuration={3000}
-        onClose={() => setSnackbar(false)}
-      >
-        <Alert
-          severity={snackText.severity}
-          variant="filled"
-          sx={{ width: "300px" }}
-        >
-          {snackText.text}
-        </Alert>
-      </Snackbar>
     </>
   );
 };

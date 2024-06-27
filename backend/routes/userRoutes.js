@@ -15,6 +15,11 @@ const {
   removeSavedAd,
   deleteMyAd,
   editMyAd,
+  bookAppointment,
+  getBookedAppointment,
+  cancelAppointment,
+  completeAppointment,
+  editAppointment,
 } = require("../controllers/userControllers");
 
 router.post("/login", login);
@@ -30,5 +35,10 @@ router.delete("/savead", verifyToken, removeSavedAd);
 router.delete("/savead", verifyToken, removeSavedAd);
 router.delete("/myads/:carId", verifyToken, deleteMyAd);
 router.put("/editad/:carId", verifyToken, upload.array("images[]"), editMyAd);
+router.post("/book_appointment", verifyToken, bookAppointment);
+router.get("/book_appointment/:userId", verifyToken, getBookedAppointment);
+router.delete("/cancel_appointment/:appointmentId", verifyToken, cancelAppointment);
+router.delete("/complete_appointment/:appointmentId", verifyToken, completeAppointment);
+router.put("/edit_appointment/:appointmentId", verifyToken, editAppointment);
 
 module.exports = router;

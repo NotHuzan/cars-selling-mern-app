@@ -3,10 +3,9 @@ import "../car/Car.css";
 import { Link, useNavigate } from "react-router-dom";
 import { FaRegEdit } from "react-icons/fa";
 import { MdOutlineDeleteForever } from "react-icons/md";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
+import { snackbarActions } from "../../store/snackbar";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 
 // Create a mapping of model names to image paths
 const carImages = {
@@ -19,10 +18,10 @@ const carImages = {
 };
 
 export default function Car(props) {
-  const [snackbar, setSnackbar] = useState(false);
-  const [snackText, setSnackText] = useState({});
-  const user = useSelector((state) => state.activeUser);
+
+  const user = useSelector((state) => state.auth.activeUser);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // Get the image source from the mapping
   // const imageSrc = carImages[props.model];
@@ -48,23 +47,23 @@ export default function Car(props) {
           }
         );
 
-        setSnackText({
-          text: data.message,
-          severity: "success",
-        });
-        setSnackbar(true);
+        dispatch(
+          snackbarActions.openSnackbar({
+            text: data.message,
+            severity: "success",
+          })
+        );
         props.reFetch();
       } catch (err) {
         console.log(err);
-        setSnackText({
-          text: err.response.data.message,
-          severity: "error",
-        });
-        setSnackbar(true);
+        dispatch(
+          snackbarActions.openSnackbar({
+            text: err.response.data.message,
+            severity: "error",
+          })
+        );
       }
-    } else {
-      console.log("ad not removed");
-    }
+    } 
   };
 
   return (
@@ -123,19 +122,6 @@ export default function Car(props) {
           </Link>
         </div>
       </div>
-      <Snackbar
-        open={snackbar}
-        autoHideDuration={3000}
-        onClose={() => setSnackbar(false)}
-      >
-        <Alert
-          severity={snackText.severity}
-          variant="filled"
-          sx={{ width: "300px" }}
-        >
-          {snackText.text}
-        </Alert>
-      </Snackbar>
     </>
   );
 

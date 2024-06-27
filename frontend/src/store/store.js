@@ -1,27 +1,14 @@
-import { createSlice, configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import auth from "./auth";
+import snackbar from "./snackbar";
 
-const authSlice = createSlice({
-  name: "auth",
-  initialState: {
-    isLoggedIn: JSON.parse(localStorage.getItem("activeUser")) ? true : false,
-    activeUser: JSON.parse(localStorage.getItem("activeUser")) || null,
-  },
-  reducers: {
-    login(state, action) {
-      state.isLoggedIn = true;
-      state.activeUser = action.payload;
-      localStorage.setItem("activeUser", JSON.stringify(state.activeUser));
-    },
-    logout(state) {
-      state.isLoggedIn = false;
-      state.activeUser = null;
-      localStorage.clear("activeUser");
-    },
-  },
+const rootReducer = combineReducers({
+  auth: auth,
+  snackbar: snackbar,
 });
 
-export const authActions = authSlice.actions;
-
-export const store = configureStore({
-  reducer: authSlice.reducer,
+const store = configureStore({
+  reducer: rootReducer,
 });
+
+export default store;

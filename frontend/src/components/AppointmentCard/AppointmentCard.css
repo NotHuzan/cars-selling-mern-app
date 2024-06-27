@@ -1,0 +1,17 @@
+.app-card {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.save-changes-btn {
+  color: #fff;
+  background-color: black;
+  padding: 10px 20px;
+  margin: 20px 0;
+}
+
+@media (max-width: 500px) {
+  .app-card {
+    width: 90%;
+  }
+}

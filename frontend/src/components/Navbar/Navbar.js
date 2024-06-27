@@ -16,10 +16,8 @@ import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { useDispatch, useSelector } from "react-redux";
-import { authActions } from "../../store/store";
-// import { SnackbarProvider, useSnackbar } from 'notistack';
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
+import { authActions } from "../../store/auth";
+import { snackbarActions } from "../../store/snackbar";
 import FormModal from "../Modal/FormModal";
 
 const linkstyle = {
@@ -31,12 +29,11 @@ const Navbar = ({ stock, SUV, SEDAN, CROSS }) => {
   const [hoveredLink, setHoveredLink] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [openModal, setModal] = useState(false);
-  const [snackbar, setSnackbar] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
-  const loggedIn = useSelector((state) => state.isLoggedIn);
+  const loggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   const open = Boolean(anchorEl);
 
@@ -51,8 +48,12 @@ const Navbar = ({ stock, SUV, SEDAN, CROSS }) => {
   const handleLogout = () => {
     setAnchorEl(null);
     dispatch(authActions.logout());
-    setSnackbar(true);
-    // enqueueSnackbar('This is a success message!', { variant: 'success' });
+    dispatch(
+      snackbarActions.openSnackbar({
+        text: 'You are Logged Out !',
+        severity: "success",
+      })
+    );
   };
 
   const handleModal = () => {
@@ -237,6 +238,9 @@ const Navbar = ({ stock, SUV, SEDAN, CROSS }) => {
             <MenuItem onClick={()=>navigate('/saved_ads')}>
               <Avatar /> My Saved Ads
             </MenuItem>
+            <MenuItem onClick={()=>navigate('/appointments')}>
+              <Avatar /> My Appointments
+            </MenuItem>
             <Divider />
             <MenuItem onClick={() => navigate("/profile/reset_password")}>
               <ListItemIcon>
@@ -269,16 +273,6 @@ const Navbar = ({ stock, SUV, SEDAN, CROSS }) => {
           </Menu>
         </div>
       </nav>
-
-      <Snackbar
-        open={snackbar}
-        autoHideDuration={3000}
-        onClose={() => setSnackbar(false)}
-      >
-        <Alert severity="success" variant="filled" sx={{ width: "300px" }}>
-          You are Logged Out !
-        </Alert>
-      </Snackbar>
     </>
   );
 };

@@ -2,22 +2,29 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./C_detail.css";
 import { FaRegBookmark, FaBookmark } from "react-icons/fa6";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { snackbarActions } from "../../store/snackbar";
 import axios from "axios";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
 
-export default function C_detail() {
+// imports for dateTime picker
+import dayjs from "dayjs";
+import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+
+const C_detail = () => {
   const { id } = useParams();
   const [car, setCar] = useState({});
   const [images, setImages] = useState([]);
   const [isSaved, setIsSaved] = useState(false);
-  const user = useSelector((state) => state.activeUser);
-  const isLoggedIn = useSelector((state) => state.isLoggedIn);
-  const [snackbar, setSnackbar] = useState(false);
-  const [snackText, setSnackText] = useState({});
+  const [showAppointment, setShowAppointment] = useState(false);
+  const [appointment, setAppointment] = useState();
+  const user = useSelector((state) => state.auth.activeUser);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const fetchCar = async () => {
     try {
@@ -27,6 +34,7 @@ export default function C_detail() {
       console.log(car);
       setImages(result.images || []);
 
+      // check if user has saved the ad or not
       if (isLoggedIn) {
         try {
           const { data } = await axios.post(
@@ -52,7 +60,7 @@ export default function C_detail() {
       console.log("Error : ", err);
     }
   };
-  
+
   useEffect(() => {
     fetchCar();
   }, [id]);
@@ -76,18 +84,20 @@ export default function C_detail() {
         );
 
         setIsSaved(false);
-        setSnackText({
-          text: data.message,
-          severity: "success",
-        });
-        setSnackbar(true);
+        dispatch(
+          snackbarActions.openSnackbar({
+            text: data.message,
+            severity: "success",
+          })
+        );
       } catch (err) {
         console.log(err);
-        setSnackText({
-          text: err.response.data.message,
-          severity: "error",
-        });
-        setSnackbar(true);
+        dispatch(
+          snackbarActions.openSnackbar({
+            text: err.response.data.message,
+            severity: "error",
+          })
+        );
       }
     } else {
       // add to saved ads
@@ -106,18 +116,71 @@ export default function C_detail() {
         );
 
         setIsSaved(true);
-        setSnackText({
-          text: data.message,
-          severity: "success",
-        });
-        setSnackbar(true);
+        dispatch(
+          snackbarActions.openSnackbar({
+            text: data.message,
+            severity: "success",
+          })
+        );
       } catch (err) {
         console.log(err);
-        setSnackText({
-          text: err.response.data.message,
-          severity: "error",
-        });
-        setSnackbar(true);
+        dispatch(
+          snackbarActions.openSnackbar({
+            text: err.response.data.message,
+            severity: "error",
+          })
+        );
+      }
+    }
+  };
+
+  const appointmentDateTimeHandler = (value) => {
+    setAppointment({
+      dateTime: value.format("YYYY-MM-DD HH:mm"),
+      location: car.owner.location,
+    });
+  };
+
+  const bookAppointmentHandler = async () => {
+    // show appointment box
+    if (!showAppointment) {
+      setShowAppointment(true);
+      setAppointment({
+        dateTime: dayjs().format("YYYY-MM-DD HH:mm"),
+        location: car.owner.location,
+      });
+    }
+
+    // book appointment
+    else if (showAppointment) {
+      try {
+        const { data } = await axios.post(
+          "http://localhost:5000/api/user/book_appointment",
+          {
+            userId: user._id,
+            carId: car._id,
+            appointmentDate: appointment.dateTime,
+            location: appointment.location,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
+        );
+        dispatch(
+          snackbarActions.openSnackbar({
+            text: data.message,
+            severity: "success",
+          })
+        );
+      } catch (err) {
+        dispatch(
+          snackbarActions.openSnackbar({
+            text: err.response.data.message,
+            severity: "error",
+          })
+        );
       }
     }
   };
@@ -184,7 +247,43 @@ export default function C_detail() {
             <h6>Seller Name : {car.owner.name}</h6>
             <h6>Seller Location : {car.owner.location}</h6>
             <h6>Seller Phone Number : {car.owner.phone}</h6>
-            <a>Book an Appointment</a>
+            {showAppointment && (
+              <div className="appointment-box">
+                <h2>Book Appointment</h2>
+                <div className="location">
+                  <label htmlFor="location">Location:</label>
+                  <input
+                    type="text"
+                    placeholder="Location"
+                    name="location"
+                    value={car.owner.location}
+                    disabled
+                  />
+                </div>
+                <div className="appointment">
+                  <label htmlFor="appointment">Date & Time:</label>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer
+                      components={[
+                        "DateTimePicker",
+                        "MobileDateTimePicker",
+                        "DesktopDateTimePicker",
+                        "StaticDateTimePicker",
+                      ]}
+                    >
+                      <DemoItem>
+                        <DateTimePicker
+                          defaultValue={dayjs()}
+                          minDateTime={dayjs()}
+                          onChange={appointmentDateTimeHandler}
+                        />
+                      </DemoItem>
+                    </DemoContainer>
+                  </LocalizationProvider>
+                </div>
+              </div>
+            )}
+            <a onClick={bookAppointmentHandler}>Book an Appointment</a>
           </div>
         ) : null}
       </div>
@@ -223,19 +322,8 @@ export default function C_detail() {
           <h6>{car.description}</h6>
         </div>
       </div>
-      <Snackbar
-        open={snackbar}
-        autoHideDuration={3000}
-        onClose={() => setSnackbar(false)}
-      >
-        <Alert
-          severity={snackText.severity}
-          variant="filled"
-          sx={{ width: "300px" }}
-        >
-          {snackText.text}
-        </Alert>
-      </Snackbar>
     </>
   );
-}
+};
+
+export default C_detail;
