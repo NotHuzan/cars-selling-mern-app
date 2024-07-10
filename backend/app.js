@@ -8,6 +8,8 @@ const userRouter = require("./routes/userRoutes.js");
 const carRouter = require("./routes/carRoutes.js");
 require("dotenv").config();
 
+const PORT=process.env.PORT || 5000;
+
 mongoose
   .connect(process.env.DB_STRING)
   .then(() => {
@@ -53,6 +55,6 @@ app.use("/api/car", carRouter);
 //   }
 // });
 
-app.listen(5000, () => {
+app.listen(PORT, () => {
   console.log("Server started at port 5000");
 });
