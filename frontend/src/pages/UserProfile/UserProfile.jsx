@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "../Signup/Signup.css";
 import { FaUser, FaLock, FaPhoneAlt, FaCity } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -76,15 +75,24 @@ const UserProfile = () => {
 
   return (
     <>
-      <div className="logbox">
-        <div className={`wrapper`}>
-          <div className="form-box login">
+      <div className="flex justify-center items-center bg-white mt-5">
+        <div
+          className={`wrapper relative bg-transparent border-2 border-white/20 backdrop-blur-md shadow-md text-gray-900 rounded-lg p-8 flex items-center transition-all`}
+        >
+          <div className="w-full md:p-8">
             <form onSubmit={submitHandler}>
-              <h1>My Profile</h1>
+              <h1 className="text-3xl font-bold text-center mb-8">
+                My Profile
+              </h1>
 
-              <div style={{ margin: "30px 0" }}>
-                <label htmlFor="email">Email</label>
-                <div className="input-box" style={{ margin: "0" }}>
+              <div className="mb-8">
+                <label
+                  htmlFor="email"
+                  className="block mb-2 text-sm font-medium text-gray-700"
+                >
+                  Email
+                </label>
+                <div className="relative w-full h-12">
                   <input
                     type="text"
                     onChange={handleChange}
@@ -92,14 +100,20 @@ const UserProfile = () => {
                     value={form.email}
                     placeholder="Email"
                     required
+                    className="w-full h-full bg-transparent outline-none border-2 border-gray-300 rounded-full text-base px-4 pr-12 placeholder-gray-600"
                   />
-                  <MdEmail className="icon" />
+                  <MdEmail className="icon absolute right-4 top-1/2 transform -translate-y-1/2 text-lg" />
                 </div>
               </div>
 
-              <div style={{ margin: "30px 0" }}>
-                <label htmlFor="name">Full Name</label>
-                <div className="input-box" style={{ margin: "0" }}>
+              <div className="mb-8">
+                <label
+                  htmlFor="name"
+                  className="block mb-2 text-sm font-medium text-gray-700"
+                >
+                  Full Name
+                </label>
+                <div className="relative w-full h-12">
                   <input
                     type="text"
                     onChange={handleChange}
@@ -107,14 +121,20 @@ const UserProfile = () => {
                     value={form.name}
                     placeholder="Name"
                     required
+                    className="w-full h-full bg-transparent outline-none border-2 border-gray-300 rounded-full text-base px-4 pr-12 placeholder-gray-600"
                   />
-                  <FaUser className="icon" />
+                  <FaUser className="icon absolute right-4 top-1/2 transform -translate-y-1/2 text-lg" />
                 </div>
               </div>
 
-              <div style={{ margin: "30px 0" }}>
-                <label htmlFor="phoen">Phone</label>
-                <div className="input-box" style={{ margin: "0" }}>
+              <div className="mb-8">
+                <label
+                  htmlFor="phone"
+                  className="block mb-2 text-sm font-medium text-gray-700"
+                >
+                  Phone
+                </label>
+                <div className="relative w-full h-12">
                   <input
                     type="text"
                     onChange={handleChange}
@@ -122,14 +142,20 @@ const UserProfile = () => {
                     value={form.phone}
                     placeholder="Phone"
                     required
+                    className="w-full h-full bg-transparent outline-none border-2 border-gray-300 rounded-full text-base px-4 pr-12 placeholder-gray-600"
                   />
-                  <FaPhoneAlt className="icon" />
+                  <FaPhoneAlt className="icon absolute right-4 top-1/2 transform -translate-y-1/2 text-lg" />
                 </div>
               </div>
 
-              <div style={{ margin: "30px 0" }}>
-                <label htmlFor="location">City</label>
-                <div className="input-box" style={{ margin: "0" }}>
+              <div className="mb-8">
+                <label
+                  htmlFor="location"
+                  className="block mb-2 text-sm font-medium text-gray-700"
+                >
+                  City
+                </label>
+                <div className="relative w-full h-12">
                   <input
                     type="text"
                     onChange={handleChange}
@@ -137,12 +163,16 @@ const UserProfile = () => {
                     value={form.location}
                     placeholder="Location"
                     required
+                    className="w-full h-full bg-transparent outline-none border-2 border-gray-300 rounded-full text-base px-4 pr-12 placeholder-gray-600"
                   />
-                  <FaCity className="icon" />
+                  <FaCity className="icon absolute right-4 top-1/2 transform -translate-y-1/2 text-lg" />
                 </div>
               </div>
 
-              <button className="loginbtn" type="submit">
+              <button
+                type="submit"
+                className="loginbtn w-full h-12 bg-black text-white rounded-full shadow-md font-medium text-base mt-4 cursor-pointer hover:bg-gray-800 transition"
+              >
                 Save Changes
               </button>
             </form>
@@ -154,3 +184,81 @@ const UserProfile = () => {
 };
 
 export default UserProfile;
+
+// return (
+//   <>
+//     <div className="logbox">
+//       <div className={`wrapper`}>
+//         <div className="form-box login">
+//           <form onSubmit={submitHandler}>
+//             <h1>My Profile</h1>
+
+//             <div style={{ margin: "30px 0" }}>
+//               <label htmlFor="email">Email</label>
+//               <div className="input-box" style={{ margin: "0" }}>
+//                 <input
+//                   type="text"
+//                   onChange={handleChange}
+//                   name="email"
+//                   value={form.email}
+//                   placeholder="Email"
+//                   required
+//                 />
+//                 <MdEmail className="icon" />
+//               </div>
+//             </div>
+
+//             <div style={{ margin: "30px 0" }}>
+//               <label htmlFor="name">Full Name</label>
+//               <div className="input-box" style={{ margin: "0" }}>
+//                 <input
+//                   type="text"
+//                   onChange={handleChange}
+//                   name="name"
+//                   value={form.name}
+//                   placeholder="Name"
+//                   required
+//                 />
+//                 <FaUser className="icon" />
+//               </div>
+//             </div>
+
+//             <div style={{ margin: "30px 0" }}>
+//               <label htmlFor="phoen">Phone</label>
+//               <div className="input-box" style={{ margin: "0" }}>
+//                 <input
+//                   type="text"
+//                   onChange={handleChange}
+//                   name="phone"
+//                   value={form.phone}
+//                   placeholder="Phone"
+//                   required
+//                 />
+//                 <FaPhoneAlt className="icon" />
+//               </div>
+//             </div>
+
+//             <div style={{ margin: "30px 0" }}>
+//               <label htmlFor="location">City</label>
+//               <div className="input-box" style={{ margin: "0" }}>
+//                 <input
+//                   type="text"
+//                   onChange={handleChange}
+//                   name="location"
+//                   value={form.location}
+//                   placeholder="Location"
+//                   required
+//                 />
+//                 <FaCity className="icon" />
+//               </div>
+//             </div>
+
+//             <button className="loginbtn" type="submit">
+//               Save Changes
+//             </button>
+//           </form>
+//         </div>
+//       </div>
+//     </div>
+//   </>
+// );

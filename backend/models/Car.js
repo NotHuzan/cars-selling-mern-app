@@ -64,6 +64,7 @@ const carSchema = new mongoose.Schema({
   },
   transmission: {
     type: String,
+    enum: ["Automatic", "Manual",]
   },
   color: {
     type: String,

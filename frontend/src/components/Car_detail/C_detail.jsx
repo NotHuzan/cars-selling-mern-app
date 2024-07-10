@@ -186,7 +186,7 @@ const C_detail = () => {
   };
 
   return (
-    <>
+    <div className="carDetailContainer">
       <div className="parent">
         <div
           id="carouselExampleControls"
@@ -287,7 +287,65 @@ const C_detail = () => {
           </div>
         ) : null}
       </div>
-      <div className="second">
+      <div className="p-6 space-y-8 rounded-md bg-card text-card-foreground">
+        <div className="text-center">
+          <h1 className="text-left text-4xl font-bold text-red-600">
+            PKR {car.price}
+          </h1>
+          <p className="text-left text-xl font-semibold text-muted-foreground capitalize">
+            {car.make} {car.model}
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="p-4 space-y-4 border rounded-md bg-gray-100 text-muted-foreground">
+            <h2 className="text-lg font-semibold">Details</h2>
+            <div className="grid grid-cols-2 gap-4 text-sm">
+              <div className="space-y-1">
+                <p className="font-bold text-gray-500">Make</p>
+                <p className="text-gray-500 capitalize">{car.make}</p>
+              </div>
+              <div className="space-y-1">
+                <p className="font-bold text-gray-500">Model</p>
+                <p className="text-gray-500 capitalize">{car.model}</p>
+              </div>
+              <div className="space-y-1">
+                <p className="font-bold text-gray-500">Type</p>
+                <p className="text-gray-500">{car.type}</p>
+              </div>
+              <div className="space-y-1">
+                <p className="font-bold text-gray-500">Year</p>
+                <p className="text-gray-500">{car.year}</p>
+              </div>
+              <div className="space-y-1">
+                <p className="font-bold text-gray-500">Mileage</p>
+                <p className="text-gray-500">{car.mileage}</p>
+              </div>
+              <div className="space-y-1">
+                <p className="font-bold text-gray-500">Condition</p>
+                <p className="text-gray-500">{car.condition}</p>
+              </div>
+              <div className="space-y-1">
+                <p className="font-bold text-gray-500">Fuel Type</p>
+                <p className="text-gray-500">{car.fuelType}</p>
+              </div>
+              <div className="space-y-1">
+                <p className="font-bold text-gray-500">Transmission</p>
+                <p className="text-gray-500">{car.transmission}</p>
+              </div>
+              <div className="space-y-1">
+                <p className="font-bold text-gray-500">Color</p>
+                <p className="text-gray-500">{car.color}</p>
+              </div>
+            </div>
+          </div>
+          <div className="p-4 border rounded-md bg-card text-card-foreground">
+            <h2 className="text-lg font-semibold">Description</h2>
+            <p className="text-sm">{car.description}</p>
+          </div>
+        </div>
+        {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6" /> */}
+      </div>
+      {/* <div className="second">
         <div className="detail_box">
           <h1>PKR {car.price}</h1>
           <h5>
@@ -321,8 +379,8 @@ const C_detail = () => {
           <h3>Description</h3>
           <h6>{car.description}</h6>
         </div>
-      </div>
-    </>
+      </div> */}
+    </div>
   );
 };
 

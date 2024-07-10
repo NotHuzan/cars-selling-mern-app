@@ -20,13 +20,14 @@
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    width: 300px;
+    width: 30%;
     text-align: center;
 }
 
 .icon img {
     width: 50px;
     height: 50px;
+    margin: 0 auto;
 }
 
 .card3 h2 {
@@ -55,7 +56,7 @@
     color: #a30000;
 }
 
-@media screen and (max-width: 600px){
+@media screen and (max-width: 768px){
     .services{
         flex-direction: column;
         align-items: center;
@@ -63,5 +64,14 @@
 
     .services .card3{
         margin-top: 2rem;
+        width: 70%;
+    }
+}
+
+
+@media screen and (max-width: 768px){
+    .services .card3{
+        margin-top: 2rem;
+        width: 100%;
     }
 }

@@ -96,10 +96,12 @@ const UseCars = ({ type, ownerAds, savedAds }) => {
     } else fetchCars();
   }, [type, search]);
 
-  return (
-    <div className="w-4/5 mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8 font-poppins">
-      {!error ? (
-        cars.map((car) => (
+  return !error ? (
+    cars.length === 0 ? (
+      <p className="text-center mt-11 mb-11">No Cars</p>
+    ) : (
+      <div className="w-4/5 mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8 font-poppins">
+        {cars.map((car) => (
           <Car
             key={car._id}
             make={car.make}
@@ -114,11 +116,11 @@ const UseCars = ({ type, ownerAds, savedAds }) => {
             edit={editAd}
             reFetch={fetchUserAds}
           />
-        ))
-      ) : (
-        <div>{error}</div>
-      )}
-    </div>
+        ))}
+      </div>
+    )
+  ) : (
+    <div>{error}</div>
   );
 };
 

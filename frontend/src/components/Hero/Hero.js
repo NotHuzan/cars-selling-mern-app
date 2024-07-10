@@ -12,7 +12,7 @@ export default function Hero() {
                 <ol className="carousel-indicators">
                     <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
                     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                    {/* <li data-target="#carouselExampleIndicators" data-slide-to="2"></li> */}
                 </ol>
                 <div className="carousel-inner">
                     <div className="carousel-item active">
@@ -22,15 +22,15 @@ export default function Hero() {
                                 </div>
                                 <video src={videoBg} autoPlay loop muted />
                                 <div className="content">
-                                    <h1>Innovative Car for a Convenient Lifestyle</h1>
+                                    <h1>Innovation for Convenient Lifestyle</h1>
                                     <p>Introducing new era of Hybrid HEV</p>
-                                    <a>Explore</a>
+                                    <a style={{margin: '15px 0'}}>Explore</a>
                                 </div>
                             </div>
 
                         </div>
                     </div>
-                    {<div className="carousel-item">
+                    {/* {<div className="carousel-item">
                         <div className='page page2'>
                             <div className='left'>
                                 <h1>Mercedees s500 Hybrid</h1>
@@ -45,7 +45,7 @@ export default function Hero() {
                                 <img src={mercedes}></img>
                             </div>
                         </div>
-                    </div>}
+                    </div>} */}
                     {<div className="carousel-item">
                         <div className='page page3'>
 
@@ -56,7 +56,7 @@ export default function Hero() {
                                 <div className="content">
                                     <h1>Sports Car for a Macho Lifestyle</h1>
                                     <p>Drive Beyond Limits.</p>
-                                    <a>Explore</a>
+                                    <a style={{margin: '15px 0'}}>Explore</a>
                                 </div>
                             </div>
 

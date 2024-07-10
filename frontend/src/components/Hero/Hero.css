@@ -7,7 +7,7 @@
     src: url('C:\Users\Ahmad\AppData\Local\Microsoft\Windows\Fonts\Fontspring-DEMO-carossoft-bold.otf') 
 } */
 #hero{
-    width: 98%;
+    width: 100%;
     margin: 0 auto;
     /* border: 1px solid black; */
 }
@@ -26,6 +26,7 @@ h1{
 }
 .page1 video{
     object-fit: cover;
+    height: 100%;
 }
 .page1 .main .content{
     position: absolute;
@@ -35,7 +36,7 @@ h1{
     align-content: center;
     color: white;
     top: 0;
-    width: 50%;
+    width: 45%;
     height: 100%;
   
     padding-left: 4rem;
@@ -92,11 +93,10 @@ h1{
     width: 60%;
 }
 
-.page3 {
-    height: 85vh;
-}
 .page3 video{
     object-fit: cover;
+    height: 100%;
+    width: 100%;
 }
 .page3 .main .content{
     position: absolute;
@@ -106,9 +106,8 @@ h1{
     align-content: center;
     color: rgb(0, 0, 0);
     top: 0;
-    width: 50%;
+    width: 45%;
     height: 100%;
-  
     padding-left: 4rem;
 }
 .page3 .main .content a {
@@ -127,4 +126,58 @@ h1{
 .page3 .main .overlay{
     position: absolute;
     
+}
+
+.main{
+    height: 100%;
+}
+
+
+@media (max-width: 768px){
+    .page{
+        height: 60vh;
+    }
+
+    .content h1{
+        font-size: 34px;
+    }
+    
+    .page1 .main .content,.page3 .main .content{
+        padding-left: 2rem;
+    }
+}
+
+@media (max-width: 500px){
+    .page{
+        height: 47vh !important;
+    }
+    
+    .content h1{
+        opacity: 0.9;
+    }
+
+    .page1 .main .content{
+        width: 80%;
+    }
+
+    .page3 .main .content{
+        width: 60%;
+    }
+
+    .page1 .main .content p,.page3 .main .content p{
+        display: none;
+    }
+}
+    
+/* 
+@media (max-height: 800px){
+    .page{
+        height: 50vh;
+    }
+} */
+
+@media (orientation: portrait){
+    .page{
+        height: 50vh;
+    }
 }

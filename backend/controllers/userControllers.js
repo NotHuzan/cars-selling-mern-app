@@ -59,7 +59,7 @@ const signup = async (req, res) => {
   member
     .save()
     .then(() => {
-      return res.status(200).json(member);
+      return res.status(200).json({ message: "Registered Successfully!" });
     })
     .catch((err) => {
       console.log(err);
@@ -83,7 +83,7 @@ const postAd = async (req, res) => {
 
     const car = new Car(newCarData);
     await car.save();
-    res.status(200).send(car);
+    res.status(200).json({ message: "Ad Posted Successfully!" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error Posting Ad!" });

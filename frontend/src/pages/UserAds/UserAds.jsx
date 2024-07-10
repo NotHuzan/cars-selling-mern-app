@@ -3,10 +3,10 @@ import UseCars from "../UseCars/UseCars";
 
 const UserAds = () => {
   return (
-    <>
-      <h1 style={{margin: '5rem',textAlign: 'center'}}>My Ads</h1>  
+    <div>
+      <h1 style={{margin: '3rem 0',textAlign: 'center'}}>My Ads</h1>  
       <UseCars ownerAds />
-    </>
+    </div>
   );
 };
 

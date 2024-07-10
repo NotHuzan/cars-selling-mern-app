@@ -6,9 +6,9 @@
     font-family: 'FSP DEMO - Caros Light';
     src: url('C:\Users\Ahmad\AppData\Local\Microsoft\Windows\Fonts\Fontspring-DEMO-carossoft-bold.otf') 
 } */
-#body{
+#sedan-box{
    background-color: #fefefe;
-    margin-top: 3rem;
+    margin: 5rem 0;
 }
 h1, h2, h3{
     font-family: 'FSP DEMO - Caros Light';
@@ -17,16 +17,17 @@ h1, h2, h3{
 h4, h5, h6, p{
     font-family: "Hoxton NorthTrial", sans-serif;
 }
-#body h1{
+#sedan-box h1{
     text-align: center;
     width: 100%;
 }
-#body .links{
+#sedan-box .links{
     display: flex;
-    width: 70%;
+    /* width: 100%; */
     margin: 0 auto;
     justify-content: space-evenly;
-    margin-top: 1rem;
+    margin: 3rem;
+    margin-bottom: 0;
 }
 a{
     list-style: none;
@@ -35,7 +36,7 @@ a{
 .active h5{
     border-bottom: 2px solid black;
 }
-#body .image{
+#sedan-box .image{
    
     width: 600px;
     margin: 0 auto;
@@ -43,29 +44,29 @@ a{
     flex-direction: column;
     justify-content: center;
 }
-#body img{
+#sedan-box img{
     display: inline-block;
     width: 100%;
     margin: 0 auto;
   
 }
-#body .all_images{
+#sedan-box .all_images{
     display: flex;
     justify-content: center;
     align-items: center;
     align-content: center;
 }
-#body .all_images> div{
+#sedan-box .all_images> div{
     display: none;
 }
-#body .all_images .active{
+#sedan-box .all_images .active{
     display: block;
 }
-#body .all_images h4{
+#sedan-box .all_images h4{
     font-size: large;
     text-align: center;
 }
-#body .all_images .buttons{
+#sedan-box .all_images .buttons{
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -73,14 +74,14 @@ a{
     margin: 0 auto;
     margin-top: 1rem;
 }
-#body .all_images .l{
+#sedan-box .all_images .l{
     border-bottom: 3px solid black;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 70%;
 }
-#body .all_images .r{
+#sedan-box .all_images .r{
     padding: 8px 16px;
     background-color: #010101;
     color: white;
@@ -127,5 +128,12 @@ a{
   /* Fade-in animation for buttons when image is in view */
   .image.active .buttons {
     opacity: 1; /* Show buttons with fade-in effect when image is active */
+  }
+
+  @media (max-width: 600px) {
+    #sedan-box .links{
+        margin: 2rem;
+        margin-bottom: 0;
+    }
   }
   

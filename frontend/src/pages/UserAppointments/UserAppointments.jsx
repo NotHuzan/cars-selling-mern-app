@@ -29,12 +29,17 @@ const UserAppointments = () => {
 
   return (
     <div>
-      {appointments.map((appointment) => (
-        <AppointmentCard
-          appointment={appointment}
-          reFetchAppointments={fetchAppointments}
-        />
-      ))}
+      <h1 className="text-center mt-11 mb-11">Appointments</h1>
+      {appointments.length === 0 ? (
+        <p className="text-center mt-11 mb-11">No Appointments</p>
+      ) : (
+        appointments.map((appointment) => (
+          <AppointmentCard
+            appointment={appointment}
+            reFetchAppointments={fetchAppointments}
+          />
+        ))
+      )}
     </div>
   );
 };

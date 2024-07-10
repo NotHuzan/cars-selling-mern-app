@@ -26,8 +26,8 @@ const CarList = () => {
   return (
     <>
       <h1 className='center'>Latest Deals</h1>
-      <div id='make_flex'>
-        {cars.slice(0, 4).map((car) => (
+      <div className="w-4/5 mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8 font-poppins">
+        {cars.slice(0, 3).map((car) => (
           <Car
             key={car._id} // Adding a key prop to help React identify elements
             make={car.make}
@@ -37,6 +37,7 @@ const CarList = () => {
             price={car.price}
             front_image={car.images}
             id={car._id}
+            imageSrc={car.images[0]}
             fuel={car.fuelType}
           />
         ))}

@@ -81,13 +81,15 @@ const PasswordReset = () => {
 
   return (
     <>
-      <div className="logbox">
-        <div className={`wrapper`}>
-          <div className="form-box login">
-            <form action="" onSubmit={submitHandler}>
-              <h1>Change Password</h1>
+      <div className="flex items-center justify-center mt-5">
+        <div className="wrapper relative bg-white border border-gray-300 shadow-lg rounded-lg overflow-hidden p-8">
+          <div className="w-full md:p-8">
+            <form onSubmit={submitHandler}>
+              <h1 className="text-2xl font-semibold text-center mb-6">
+                Change Password
+              </h1>
 
-              <div className="input-box">
+              <div className="relative mb-4">
                 <input
                   type="password"
                   name="currentPassword"
@@ -95,10 +97,12 @@ const PasswordReset = () => {
                   onChange={(e) => setOldPassword(e.target.value)}
                   placeholder="Current Password"
                   required
+                  className="w-full h-12 bg-gray-50 border border-gray-300 rounded-lg pl-4 pr-10 placeholder-gray-500 text-gray-900 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
-                <FaLock className="icon" />
+                <FaLock className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
               </div>
-              <div className="input-box">
+
+              <div className="relative mb-4">
                 <input
                   type="password"
                   name="newPassword"
@@ -106,11 +110,12 @@ const PasswordReset = () => {
                   onChange={(e) => setNewPassword(e.target.value)}
                   placeholder="New Password"
                   required
+                  className="w-full h-12 bg-gray-50 border border-gray-300 rounded-lg pl-4 pr-10 placeholder-gray-500 text-gray-900 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
-                <FaLock className="icon" />
+                <FaLock className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
               </div>
 
-              <div className="input-box">
+              <div className="relative mb-4">
                 <input
                   type="password"
                   name="confirmPassword"
@@ -118,11 +123,15 @@ const PasswordReset = () => {
                   onChange={(e) => setConfirmPass(e.target.value)}
                   placeholder="Confirm Password"
                   required
+                  className="w-full h-12 bg-gray-50 border border-gray-300 rounded-lg pl-4 pr-10 placeholder-gray-500 text-gray-900 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
-                <FaLock className="icon" />
+                <FaLock className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
               </div>
 
-              <button className="loginbtn" type="submit">
+              <button
+                type="submit"
+                className="w-full h-12 bg-black text-white rounded-lg shadow-md hover:bg-gray-800 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
                 Submit
               </button>
             </form>
@@ -134,3 +143,54 @@ const PasswordReset = () => {
 };
 
 export default PasswordReset;
+
+// <>
+//   <div className="logbox">
+//     <div className={`wrapper`}>
+//       <div className="form-box login">
+//         <form action="" onSubmit={submitHandler}>
+//           <h1>Change Password</h1>
+
+//           <div className="input-box">
+//             <input
+//               type="password"
+//               name="currentPassword"
+//               value={oldPass}
+//               onChange={(e) => setOldPassword(e.target.value)}
+//               placeholder="Current Password"
+//               required
+//             />
+//             <FaLock className="icon" />
+//           </div>
+//           <div className="input-box">
+//             <input
+//               type="password"
+//               name="newPassword"
+//               value={newPass}
+//               onChange={(e) => setNewPassword(e.target.value)}
+//               placeholder="New Password"
+//               required
+//             />
+//             <FaLock className="icon" />
+//           </div>
+
+//           <div className="input-box">
+//             <input
+//               type="password"
+//               name="confirmPassword"
+//               value={confirmPass}
+//               onChange={(e) => setConfirmPass(e.target.value)}
+//               placeholder="Confirm Password"
+//               required
+//             />
+//             <FaLock className="icon" />
+//           </div>
+
+//           <button className="loginbtn" type="submit">
+//             Submit
+//           </button>
+//         </form>
+//       </div>
+//     </div>
+//   </div>
+// </>

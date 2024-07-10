@@ -3,10 +3,10 @@ import UseCars from '../UseCars/UseCars'
 
 const UserSavedAds = () => {
   return (
-    <>
-      <h1 style={{margin: '5rem',textAlign: 'center'}}>Saved Ads</h1>  
+    <div>
+      <h1 style={{margin: '3rem 0',textAlign: 'center'}}>Saved Ads</h1>  
       <UseCars savedAds />
-    </>
+    </div>
   )
 }
 

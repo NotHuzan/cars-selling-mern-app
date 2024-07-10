@@ -53,9 +53,12 @@
 }
 .parent{
     display: flex;
+    align-items: center;
+}
+
+.carDetailContainer{
     width: 90%;
     margin: 0 auto;
-    align-items: center;
 }
 /* .parent> div{
     border: 2px solid yellow;
@@ -75,6 +78,10 @@
     margin-top: 2rem;
 }
 
+.parent .child2 a:hover{
+    color: #fff !important;
+}
+
 .child1, .child2{
     flex: 1;
 }
@@ -86,7 +93,7 @@
     position: absolute;
     top: 3%;
     right: 5%;
-    z-index: 1000;
+    z-index: 100;
     text-align: center;
     font-size: 1.2rem;
     border-radius: 10px;

@@ -1,13 +1,4 @@
 
-nav{
-  padding: 1rem 3rem;
-  display: flex;
-  margin-top: 0rem;
-  align-items: center;
-  /* border: 1px solid black; */
-  align-content: center;
-  justify-content: space-between;
-}
 a{
   cursor: pointer;
 }
@@ -28,7 +19,7 @@ nav .left{
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 4rem;
+  /* margin-left: 4rem; */
 }
 
 nav a{
@@ -47,11 +38,11 @@ nav a{
 .icons i{
   margin-left: 2rem;
 }
-#one:hover,#two:hover,#three:hover,#four:hover,#five:hover{
+/* #one:hover,#two:hover,#three:hover,#four:hover,#five:hover{
   background-color: #d69e9e;
   color: #fff;
   cursor: pointer;
-}
+} */
 Link:hover{
   color: white;
 }
