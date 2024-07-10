@@ -33,13 +33,13 @@ export default function Car(props) {
   };
 
   const deleteAdHandler = async () => {
-    const result = confirm("Are you sure to remove Ad?");
+    // const result = confirm("Are you sure to remove Ad?");
 
-    if (result) {
+    // if (result) {
       // console.log("ad removed");
       try {
         const { data } = await axios.delete(
-          `http://localhost:5000/api/user/myads/${props.id}`,
+          `${process.env.REACT_APP_BASE_URL}/api/user/myads/${props.id}`,
           {
             headers: {
               Authorization: `Bearer ${user.token}`,
@@ -63,7 +63,7 @@ export default function Car(props) {
           })
         );
       }
-    } 
+    // } 
   };
 
   return (
@@ -86,7 +86,7 @@ export default function Car(props) {
           <img
             src={
               imageSrc.match("^uploads")
-                ? "http://localhost:5000/" + props.imageSrc
+                ? `${process.env.REACT_APP_BASE_URL}/` + props.imageSrc
                 : carImages[props.model]
             }
             alt={`${props.make} ${props.model}`}
@@ -133,7 +133,7 @@ export default function Car(props) {
         <img
           src={
             imageSrc.match("^uploads")
-              ? "http://localhost:5000/" + props.imageSrc
+              ? `${process.env.REACT_APP_BASE_URL}/` + props.imageSrc
               : carImages[props.model]
           }
         />

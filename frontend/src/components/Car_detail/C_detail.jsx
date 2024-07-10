@@ -28,7 +28,7 @@ const C_detail = () => {
 
   const fetchCar = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/car/car/${id}`);
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/car/car/${id}`);
       const result = await response.json();
       setCar(result);
       console.log(car);
@@ -38,7 +38,7 @@ const C_detail = () => {
       if (isLoggedIn) {
         try {
           const { data } = await axios.post(
-            "http://localhost:5000/api/user/is_ad_saved",
+            `${process.env.REACT_APP_BASE_URL}/api/user/is_ad_saved`,
             {
               userId: user._id,
               carId: result._id,
@@ -71,7 +71,7 @@ const C_detail = () => {
       // remove from saved ads
       try {
         const { data } = await axios.delete(
-          "http://localhost:5000/api/user/savead",
+          `${process.env.REACT_APP_BASE_URL}/api/user/savead`,
           {
             data: {
               userId: user._id,
@@ -103,7 +103,7 @@ const C_detail = () => {
       // add to saved ads
       try {
         const { data } = await axios.post(
-          "http://localhost:5000/api/user/savead",
+          `${process.env.REACT_APP_BASE_URL}/api/user/savead`,
           {
             userId: user._id,
             carId: car._id,
@@ -155,7 +155,7 @@ const C_detail = () => {
     else if (showAppointment) {
       try {
         const { data } = await axios.post(
-          "http://localhost:5000/api/user/book_appointment",
+          `${process.env.REACT_APP_BASE_URL}/api/user/book_appointment`,
           {
             userId: user._id,
             carId: car._id,
@@ -207,10 +207,10 @@ const C_detail = () => {
                   className="d-block w-100"
                   src={
                     String(image).match("^uploads")
-                      ? "http://localhost:5000/" + image
+                      ? `${process.env.REACT_APP_BASE_URL}/` + image
                       : image
                   }
-                  // src={'http://localhost:5000/' + image}
+                  // src={`${process.env.REACT_APP_BASE_URL}/` + image}
                   alt={`Slide ${index + 1}`}
                 />
               </div>

@@ -10,7 +10,7 @@ const UserAppointments = () => {
   const fetchAppointments = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:5000/api/user/book_appointment/${user._id}`,
+        `${process.env.REACT_APP_BASE_URL}/api/user/book_appointment/${user._id}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,

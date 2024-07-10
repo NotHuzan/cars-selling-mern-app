@@ -40,7 +40,7 @@ const UserProfile = () => {
     e.preventDefault();
     try {
       const { data } = await axios.put(
-        "http://localhost:5000/api/user/update_profile",
+        `${process.env.REACT_APP_BASE_URL}/api/user/update_profile`,
         { ...form, _id: user._id },
         {
           headers: {

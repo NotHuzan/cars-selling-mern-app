@@ -45,7 +45,7 @@ const AppointmentCard = ({ appointment, reFetchAppointments }) => {
 
     try {
       const { data } = await axios.put(
-        `http://localhost:5000/api/user/edit_appointment/${appointment._id}`,
+        `${process.env.REACT_APP_BASE_URL}/api/user/edit_appointment/${appointment._id}`,
         {
           appointmentDate: newAppointment.dateTime,
           location: newAppointment.location,
@@ -79,7 +79,7 @@ const AppointmentCard = ({ appointment, reFetchAppointments }) => {
   const completeAppointmentHandler = async () => {
     try {
       const { data } = await axios.delete(
-        `http://localhost:5000/api/user/complete_appointment/${appointment._id}`,
+        `${process.env.REACT_APP_BASE_URL}/api/user/complete_appointment/${appointment._id}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -108,7 +108,7 @@ const AppointmentCard = ({ appointment, reFetchAppointments }) => {
   const cancelAppointmentHandler = async () => {
     try {
       const { data } = await axios.delete(
-        `http://localhost:5000/api/user/cancel_appointment/${appointment._id}`,
+        `${process.env.REACT_APP_BASE_URL}/api/user/cancel_appointment/${appointment._id}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -138,7 +138,7 @@ const AppointmentCard = ({ appointment, reFetchAppointments }) => {
     <div class="flex flex-col md:flex-row items-start gap-4 p-4 rounded-lg shadow-md app-card">
       <div class="flex-shrink-0 w-full md:w-48 h-32 md:h-auto overflow-hidden rounded-md h-full">
         <img
-          src={appointment.carId.images[0]}
+          src={`${process.env.REACT_APP_BASE_URL}/${appointment.carId.images[0]}`}
           alt="Car"
           width={192}
           height={144}

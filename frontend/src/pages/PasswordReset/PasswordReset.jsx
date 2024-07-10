@@ -31,7 +31,7 @@ const PasswordReset = () => {
     } else {
       try {
         const { data } = await axios.post(
-          "http://localhost:5000/api/user/reset_password",
+          `${process.env.REACT_APP_BASE_URL}/api/user/reset_password`,
           { user, oldPass, newPass },
           {
             headers: {

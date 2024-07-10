@@ -32,7 +32,7 @@ const LoginForm = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/user/login",
+        `${process.env.REACT_APP_BASE_URL}/api/user/login`,
         form
       );
       // console.log(data);

@@ -23,7 +23,7 @@ const PostAd = ({ type }) => {
   const fetchCar = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:5000/api/car/car/${carId}`
+        `${process.env.REACT_APP_BASE_URL}/api/car/car/${carId}`
       );
       console.log(data);
       setForm({
@@ -121,7 +121,7 @@ const PostAd = ({ type }) => {
       if (editCarId) {
         console.log(formData);
         const { data } = await axios.put(
-          `http://localhost:5000/api/user/editad/${editCarId}`,
+          `${process.env.REACT_APP_BASE_URL}/api/user/editad/${editCarId}`,
           formData,
           {
             headers: {
@@ -142,7 +142,7 @@ const PostAd = ({ type }) => {
       } else {
         console.log(formData);
         const { data } = await axios.post(
-          "http://localhost:5000/api/user/postad",
+          `${process.env.REACT_APP_BASE_URL}/api/user/postad`,
           formData,
           {
             headers: {

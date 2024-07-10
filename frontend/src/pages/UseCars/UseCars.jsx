@@ -17,7 +17,7 @@ const UseCars = ({ type, ownerAds, savedAds }) => {
 
     try {
       const { data } = await axios.get(
-        `http://localhost:5000/api/car/usedcars/${type}`
+        `${process.env.REACT_APP_BASE_URL}/api/car/usedcars/${type}`
       );
       console.log(data);
       setError(null);
@@ -32,7 +32,7 @@ const UseCars = ({ type, ownerAds, savedAds }) => {
     console.log("search");
     try {
       const { data } = await axios.get(
-        `http://localhost:5000/api/car/usedcars/${search}`
+        `${process.env.REACT_APP_BASE_URL}/api/car/usedcars/${search}`
       );
       console.log(data);
       setError(null);
@@ -49,7 +49,7 @@ const UseCars = ({ type, ownerAds, savedAds }) => {
     setEditAd(true);
     try {
       const { data } = await axios.get(
-        `http://localhost:5000/api/user/myads/${user._id}`,
+        `${process.env.REACT_APP_BASE_URL}/api/user/myads/${user._id}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -70,7 +70,7 @@ const UseCars = ({ type, ownerAds, savedAds }) => {
 
     try {
       const { data } = await axios.get(
-        `http://localhost:5000/api/user/saved_ads/${user._id}`,
+        `${process.env.REACT_APP_BASE_URL}/api/user/saved_ads/${user._id}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,

@@ -54,7 +54,7 @@ const CarPostForm = () => {
     
   //   try {
   //     console.log(data);
-  //     const response = await axios.post('http://localhost:5000/postadd', data, 
+  //     const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/postadd`, data, 
   //     {
   //       headers: {
   //         'Content-Type': 'multipart/form-data'
@@ -90,7 +90,7 @@ const CarPostForm = () => {
     
     try {
       console.log(data);
-      const response = await axios.post('http://localhost:5000/api/user/postad', data, 
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/user/postad`, data, 
       {
         headers: {
           'Content-Type': 'multipart/form-data'
