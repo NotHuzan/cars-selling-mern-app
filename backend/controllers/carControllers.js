@@ -53,15 +53,15 @@ const getCars = async (req, res) => {
     : res.status(500).send("Error Fetching Cars");
 };
 
+
 const getCarsByType = async (req, res) => {
   let carType = req.params.cartype;
-  if (carType === "suv") carType = carType.toUpperCase();
-  console.log(carType);
-  const usedCars = await Car.find({ type: carType });
+  const usedCars = await Car.find({ type: { $regex: new RegExp(`^${carType}$`, 'i') } });
   usedCars
     ? res.status(200).send(usedCars)
     : res.status(404).send("Error Fetching Cars");
 };
+
 
 const getCarID = async (req, res) => {
   const car = await Car.findById(req.params.id).populate({

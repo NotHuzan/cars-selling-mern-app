@@ -15,13 +15,12 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 import EventIcon from "@mui/icons-material/Event";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import ScheduleIcon from "@mui/icons-material/Schedule";
+import PostAddIcon from '@mui/icons-material/PostAdd';
 
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
-import PersonIcon from '@mui/icons-material/Person';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
-
+import PersonIcon from "@mui/icons-material/Person";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
@@ -84,7 +83,7 @@ const UserSettings = ({ handleClick, handleClose, handleLogout, anchorEl }) => {
       >
         <MenuItem onClick={() => navigate("/profile")}>
           <ListItemIcon>
-            <AccountCircleIcon/>
+            <AccountCircleIcon />
           </ListItemIcon>
           Profile
         </MenuItem>
@@ -94,7 +93,7 @@ const UserSettings = ({ handleClick, handleClose, handleLogout, anchorEl }) => {
           </ListItemIcon>
           Change Password
         </MenuItem>
-        <Divider/>
+        <Divider />
         <MenuItem onClick={() => navigate("/myads")}>
           <ListItemIcon>
             <AssignmentIcon />
@@ -112,7 +111,8 @@ const UserSettings = ({ handleClick, handleClose, handleLogout, anchorEl }) => {
             <ScheduleIcon />
           </ListItemIcon>
           My Appointments
-        </MenuItem>        
+        </MenuItem>
+
         {/* <FormModal openModal={openModal} closeModal={setModalClose}>
           <MenuItem onClick={handleModal}>
             <ListItemIcon>
@@ -128,6 +128,13 @@ const UserSettings = ({ handleClick, handleClose, handleLogout, anchorEl }) => {
       </ListItemIcon>
       Settings
     </MenuItem> */}
+        <Divider />
+        <MenuItem onClick={() => navigate("/postad")}>
+          <ListItemIcon>
+            <PostAddIcon />
+          </ListItemIcon>
+          Post Ad
+        </MenuItem>
         <Divider />
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>

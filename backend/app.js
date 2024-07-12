@@ -62,5 +62,5 @@ app.use("/api/car", carRouter);
 // });
 
 app.listen(PORT, () => {
-  console.log("Server started at port 5000");
+  console.log(`Server started at port ${PORT}`);
 });
