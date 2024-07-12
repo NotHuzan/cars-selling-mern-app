@@ -1,31 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import Car from '../car/Car'
-import '../Listing/Listing.css'
-
+import React, { useState, useEffect } from "react";
+import Car from "../car/Car";
+import "../Listing/Listing.css";
+// import { RingLoader } from "react-spinners";
 
 const CarList = () => {
   const [cars, setCars] = useState([]);
+  // const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
+      // setLoading(true);
       try {
-        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/car/usedcars`);
+        const response = await fetch(
+          `${process.env.REACT_APP_BASE_URL}/api/car/usedcars`
+        );
         if (!response.ok) {
-          throw new Error('Failed to fetch data');
+          // setLoading(false);
+          throw new Error("Failed to fetch data");
         }
         const data = await response.json();
+        // setLoading(false);
         setCars(data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        // setLoading(false);
+        console.error("Error fetching data:", error);
       }
     };
     fetchData();
   }, []);
 
-  console.log(cars)
+  console.log(cars);
   return (
     <>
-      <h1 className='center'>Latest Deals</h1>
+      <h1 className="center">Latest Deals</h1>
       <div className="w-4/5 mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8 font-poppins">
         {cars.slice(0, 3).map((car) => (
           <Car
@@ -41,12 +48,9 @@ const CarList = () => {
             fuel={car.fuelType}
           />
         ))}
-
       </div>
     </>
   );
 };
 
 export default CarList;
-
-

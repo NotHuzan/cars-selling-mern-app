@@ -34,6 +34,7 @@ const carSchema = new mongoose.Schema({
   },
   type: {
     type: String,
+    enum: ["Sedan", "Hatchback", "SUV", "Crossover"],
     required: true,
   },
   engine: {

@@ -24,7 +24,7 @@ const Navbar = ({ stock, SUV, SEDAN, CROSS }) => {
   const location = useLocation();
   const loggedIn = useSelector((state) => state.auth.isLoggedIn);
   const [showDrawerButton, setShowDrawerButton] = useState(false);
-  const matches = useMediaQuery("(max-width:1050px)");
+  const matches = useMediaQuery("(max-width:1100px)");
 
   // const open = Boolean(anchorEl);
 
@@ -84,14 +84,14 @@ const Navbar = ({ stock, SUV, SEDAN, CROSS }) => {
       <nav>
         <div className="navbar">
           <div className="logo">
-            <h2
+            <div
               onClick={() => {
                 navigate("/");
               }}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", width: '10rem' }}
             >
-              CARS
-            </h2>
+              <img src="/headLogo.png" alt="" />
+            </div>
           </div>
 
           {!showDrawerButton && (

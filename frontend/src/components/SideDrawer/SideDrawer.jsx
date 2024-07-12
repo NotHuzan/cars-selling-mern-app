@@ -38,14 +38,14 @@ const SideDrawer = () => {
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <div className="logo">
-        <h2
+        <div
           onClick={() => {
             navigate("/");
           }}
-          style={{ cursor: "pointer", margin: "2rem 1rem" }}
+          style={{ cursor: "pointer", width: "10rem", margin: "2rem 1rem" }}
         >
-          CARS
-        </h2>
+          <img src="/headLogo.png" alt="" />
+        </div>
       </div>
       <Divider />
       <List>
