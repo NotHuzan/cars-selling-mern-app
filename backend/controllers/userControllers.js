@@ -21,21 +21,28 @@ const login = async (req, res) => {
   });
 
   console.log("Generated Token\n", token);
-  if (req.cookies[`${user._id}`]) {
-    req.cookies[`${user._id}`] = "";
-  }
-  res.cookie(String(user._id), token, {
-    path: "/",
-    expires: new Date(Date.now() + 1000 * 3600),
-    // expires: new Date(Date.now() + 1000 * 30)
+  // if (req.cookies[`${user._id}`]) {
+  //   req.cookies[`${user._id}`] = "";
+  // }
+
+  res.clearCookie("token");
+  // res.cookie(String(user._id), token, {
+  //   path: "/",
+  //   expires: new Date(Date.now() + 1000 * 3600),
+  //   // expires: new Date(Date.now() + 1000 * 30)
+  //   httpOnly: true,
+  //   sameSite: "lax",
+  // });
+
+  res.cookie("token", token, {
     httpOnly: true,
+    secure: false, // true in production with HTTPS
     sameSite: "lax",
   });
 
   return res.status(200).json({
     message: "Successfully Logged In",
     user: user,
-    token,
   });
 };
 

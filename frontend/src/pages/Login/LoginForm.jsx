@@ -36,17 +36,20 @@ const LoginForm = () => {
     try {
       const { data } = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/user/login`,
-        form
+        form,
+        {
+          withCredentials: true,
+        }
       );
       // console.log(data);
       setLoading(false);
-      const user = { ...data.user, token: data.token };
+      const user = { ...data.user};
       dispatch(authActions.login(user));
       dispatch(
         snackbarActions.openSnackbar({
           text: data.message,
           severity: "success",
-        })
+        }),
       );
       const from = location.state?.from?.pathname || "/";
       navigate(from);
@@ -57,7 +60,7 @@ const LoginForm = () => {
         snackbarActions.openSnackbar({
           text: err.response.data.message,
           severity: "error",
-        })
+        }),
       );
     }
   };

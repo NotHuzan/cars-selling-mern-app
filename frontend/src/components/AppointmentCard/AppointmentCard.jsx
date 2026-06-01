@@ -51,9 +51,7 @@ const AppointmentCard = ({ appointment, reFetchAppointments }) => {
           location: newAppointment.location,
         },
         {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
+          withCredentials: true
         }
       );
       dispatch(
@@ -81,9 +79,7 @@ const AppointmentCard = ({ appointment, reFetchAppointments }) => {
       const { data } = await axios.delete(
         `${process.env.REACT_APP_BASE_URL}/api/user/complete_appointment/${appointment._id}`,
         {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
+          withCredentials: true
         }
       );
 
@@ -110,9 +106,7 @@ const AppointmentCard = ({ appointment, reFetchAppointments }) => {
       const { data } = await axios.delete(
         `${process.env.REACT_APP_BASE_URL}/api/user/cancel_appointment/${appointment._id}`,
         {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
+          withCredentials: true
         }
       );
 

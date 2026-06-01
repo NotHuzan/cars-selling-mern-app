@@ -138,9 +138,7 @@ const PostAd = ({ type }) => {
           `${process.env.REACT_APP_BASE_URL}/api/user/editad/${editCarId}`,
           formData,
           {
-            headers: {
-              Authorization: `Bearer ${user.token}`,
-            },
+            withCredentials: true
           }
         );
         console.log(data);
@@ -158,9 +156,7 @@ const PostAd = ({ type }) => {
           `${process.env.REACT_APP_BASE_URL}/api/user/postad`,
           formData,
           {
-            headers: {
-              Authorization: `Bearer ${user.token}`,
-            },
+            withCredentials: true
           }
         );
         console.log(data);

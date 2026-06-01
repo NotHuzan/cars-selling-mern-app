@@ -50,9 +50,7 @@ const C_detail = () => {
               carId: result._id,
             },
             {
-              headers: {
-                Authorization: `Bearer ${user.token}`,
-              },
+              withCredentials: true
             }
           );
           console.log(data);
@@ -84,9 +82,7 @@ const C_detail = () => {
               userId: user._id,
               carId: car._id,
             },
-            headers: {
-              Authorization: `Bearer ${user.token}`,
-            },
+            withCredentials: true
           }
         );
 
@@ -116,9 +112,7 @@ const C_detail = () => {
             carId: car._id,
           },
           {
-            headers: {
-              Authorization: `Bearer ${user.token}`,
-            },
+            withCredentials: true
           }
         );
 
@@ -174,9 +168,7 @@ const C_detail = () => {
             location: appointment.location,
           },
           {
-            headers: {
-              Authorization: `Bearer ${user.token}`,
-            },
+            withCredentials: true
           }
         );
         setLoading(false);

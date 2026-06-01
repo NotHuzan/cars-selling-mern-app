@@ -15,9 +15,7 @@ const UserAppointments = () => {
       const { data } = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/api/user/book_appointment/${user._id}`,
         {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
+          withCredentials: true
         }
       );
       setLoading(false);

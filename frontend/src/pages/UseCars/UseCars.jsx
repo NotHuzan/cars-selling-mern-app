@@ -59,9 +59,7 @@ const UseCars = ({ type, ownerAds, savedAds }) => {
       const { data } = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/api/user/myads/${user._id}`,
         {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
+          withCredentials: true
         }
       );
       console.log(data);
@@ -82,9 +80,10 @@ const UseCars = ({ type, ownerAds, savedAds }) => {
       const { data } = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/api/user/saved_ads/${user._id}`,
         {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
+          // headers: {
+          //   Authorization: `Bearer ${user.token}`,
+          // },
+          withCredentials: true
         }
       );
       console.log(data);

@@ -41,9 +41,7 @@ export default function Car(props) {
         const { data } = await axios.delete(
           `${process.env.REACT_APP_BASE_URL}/api/user/myads/${props.id}`,
           {
-            headers: {
-              Authorization: `Bearer ${user.token}`,
-            },
+            withCredentials: true
           }
         );
 

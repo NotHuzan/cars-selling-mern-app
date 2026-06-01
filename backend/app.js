@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 app.use("/uploads", express.static("uploads"));
 app.use(
   cors({
-    origin: "*", // Allow all origins
+    origin: "http://localhost:3000", // Allow all origins
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })

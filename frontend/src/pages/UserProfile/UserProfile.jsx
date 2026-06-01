@@ -46,9 +46,7 @@ const UserProfile = () => {
         `${process.env.REACT_APP_BASE_URL}/api/user/update_profile`,
         { ...form, _id: user._id },
         {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
+          withCredentials: true
         }
       );
       // console.log(data);

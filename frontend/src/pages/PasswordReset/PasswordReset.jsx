@@ -37,9 +37,7 @@ const PasswordReset = () => {
           `${process.env.REACT_APP_BASE_URL}/api/user/reset_password`,
           { user, oldPass, newPass },
           {
-            headers: {
-              Authorization: `Bearer ${user.token}`,
-            },
+            withCredentials: true
           }
         );
         console.log(data);
